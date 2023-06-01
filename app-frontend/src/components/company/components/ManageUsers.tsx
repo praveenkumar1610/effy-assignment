@@ -76,7 +76,7 @@ function ManageUsers({ companyId }: Props) {
                                     {users.map((item: any) => (
                                         <>
                                             <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
-                                                <Card sx={{ maxWidth: 340, cursor: "pointer" }} >
+                                                <Card sx={{ minWidth: 350, cursor: "pointer" }} >
                                                     <CardHeader
                                                         avatar={
                                                             <Avatar sx={{ bgcolor: 'red' }}>

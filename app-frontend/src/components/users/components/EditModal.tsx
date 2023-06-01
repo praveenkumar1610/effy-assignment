@@ -18,6 +18,7 @@ interface Props {
     setOpen: (value: boolean) => void;
     edit: boolean;
     editValue?: any;
+    setLoader: (value: boolean) => void;
 }
 
 const useStyles: any = makeStyles((theme: Theme) => ({
@@ -36,7 +37,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
 }));
 
 
-function EditModal({ open, setOpen, edit, editValue }: Props) {
+function EditModal({ open, setOpen, edit, editValue,setLoader }: Props) {
     const classes = useStyles();
     const [user,setUser] = useState( edit ? {
         firstName:editValue.firstName,
@@ -89,7 +90,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                 console.log(err)
             })
         }
-
+        setLoader(true)
     };
 
     return (
@@ -105,6 +106,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                             className={classes.fieldBox}
                             label="First Name"
                             value={user.firstName}
+                            sx={{marginTop:"1rem"}}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUser((user)=>({...user,firstName:(e.target.value)}))}
                             fullWidth
                             required
@@ -113,6 +115,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                             label="Last Name"
                             className={classes.fieldBox}
                             value={user.lastName}
+                            sx={{marginTop:"1rem"}}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>  setUser((user)=>({...user,lastName:(e.target.value)}))}
                             fullWidth
                             required
@@ -121,6 +124,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                             label="Email"
                             className={classes.fieldBox}
                             value={user.email}
+                            sx={{marginTop:"1rem"}}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => setUser((user)=>({...user,email:(e.target.value)}))}
                             fullWidth
                             required
@@ -129,6 +133,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                             label="Designation"
                             className={classes.fieldBox}
                             value={user.designation}
+                            sx={{marginTop:"1rem"}}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>  setUser((user)=>({...user,designation:(e.target.value)}))}
                             fullWidth
                             required
@@ -137,6 +142,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                             label="Date of Birth"
                             className={classes.fieldBox}
                             value={user.dob}
+                            sx={{marginTop:"1rem"}}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>  setUser((user)=>({...user,dob:(e.target.value)}))}
                             fullWidth
                             required
@@ -144,6 +150,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                         <Button
                             type="submit"
                             variant="contained"
+                            sx={{marginTop:"1rem"}}
                             className={classes.fieldBox}
                             color="primary"
                             fullWidth

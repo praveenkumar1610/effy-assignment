@@ -10,9 +10,10 @@ import { GoogleMap, MarkerF, useLoadScript } from "@react-google-maps/api";
 
 import ManageUsers from './components/ManageUsers';
 
-import { Button, FormControl,  Typography, Drawer } from "@mui/material";
+import { Button, FormControl, Typography, Drawer } from "@mui/material";
 import EditModal from './components/EditModal';
 
+import CompanyTable from './components/CompanyTable';
 import { makeStyles } from '@mui/styles'
 import { config } from '../../utility/config';
 
@@ -32,13 +33,11 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-function CompanyDetails() {
-    const [companyDetail, setCompanyDetail] = useState<any>([]);
+function CompanyDetails({openDrawer,setOpenDrawer,companyDetail}:any) {
     const classes = useStyles();
     const [loader, setLoader] = useState<boolean>(true)
     const [open, setOpen] = useState<boolean>(false);
     const [showUsers, setShowUsers] = useState<boolean>(false);
-    const [openDrawer, setOpenDrawer] = useState<boolean>(false)
     const navigate = useNavigate();
     const { companyId } = useParams();
     const { isLoaded } = useLoadScript({
@@ -48,14 +47,10 @@ function CompanyDetails() {
 
     const center = useMemo(() => ({ lat: 12.973291, lng: 80.244438 }), []);
 
-    useEffect(() => {
-        axios.get(`${config.url}/company/${companyId}`).then((data) => { setCompanyDetail(data.data.data); setLoader(false) }).catch(err => console.log(err))
-    }, [open])
-
     return (
         <>
             <div style={{ width: "100%", height: "100vh", display: 'flex' }}>
-                <div style={{ backgroundColor: "#5E53E9", display: 'flex', flexDirection: 'column', justifyContent: 'center', width: "20%", borderRadius: "0.5rem" }}>
+                {/* <div style={{ backgroundColor: "#5E53E9", display: 'flex', flexDirection: 'column', justifyContent: 'center', width: "20%", borderRadius: "0.5rem" }}>
                     <Button variant="contained" onClick={() => navigate('/companies')}>Manage Company</Button>
                     <Button variant="contained" style={{ marginTop: "2rem" }} onClick={() => navigate('/users')}>Manage User</Button>
                 </div>
@@ -96,13 +91,13 @@ function CompanyDetails() {
                     </div>
                     <div>
                         {showUsers && (
-                            <ManageUsers companyId={companyId}/>
+                            <ManageUsers companyId={companyId} />
                         )}
                     </div>
-                </div>
-                {open && (
+                </div> */}
+                {/* {open && (
                     <EditModal open={open} setOpen={setOpen} edit={true} editValue={companyDetail} />
-                )}
+                )} */}
                 <Drawer
                     className={classes.drawer}
                     classes={{
@@ -121,9 +116,11 @@ function CompanyDetails() {
                                 center={center}
                                 zoom={10}
                             >
-                                <MarkerF position={{ lat: companyDetail?.coordinates[0], lng: companyDetail?.coordinates[1] }}
-                                    icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
-                                />
+                                {!loader && (
+                                    <MarkerF position={{ lat: companyDetail?.coordinates[0], lng: companyDetail?.coordinates[1] }}
+                                        icon={"http://maps.google.com/mapfiles/ms/icons/yellow-dot.png"}
+                                    />
+                                )}
                             </GoogleMap>
                         </>
                     )}

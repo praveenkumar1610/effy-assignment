@@ -20,6 +20,7 @@ interface Props {
     setOpen: (value: boolean) => void;
     edit: boolean;
     editValue?: any;
+    setLoader:(value: boolean) => void;
 }
 
 const useStyles: any = makeStyles((theme: Theme) => ({
@@ -38,7 +39,7 @@ const useStyles: any = makeStyles((theme: Theme) => ({
 }));
 
 
-function EditModal({ open, setOpen, edit, editValue }: Props) {
+function EditModal({ open, setOpen, edit, editValue,setLoader }: Props) {
     const classes = useStyles();
     const [name, setName] = useState(edit ? editValue.companyName : '');
     const [address, setAddress] = useState(edit ? editValue.companyAddress : '');
@@ -58,7 +59,7 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
         (async () => {
             setLoading(true)
             const response = await axios.get(
-                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${config.api_key as string}`
+                `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=AIzaSyDrTz67WokoLBp40gAPNEGol-B3RJSUukU`
             );
             if (active) {
                 console.log(response.data);
@@ -76,9 +77,10 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                 id: editValue._id,
                 companyName: name,
                 companyAddress: address,
-                companyCoordinates: Array.from(Object.values(selectedAddress.geometry.location)),
+                companyCoordinates: selectedAddress.length? Array.from(Object.values(selectedAddress.geometry.location)) : coordinates,
             }).then((data) => {
                 if (data.status == 200) {
+                    setLoader(true)
                     handleClose();
                 }
             }).catch((err) => {
@@ -91,7 +93,8 @@ function EditModal({ open, setOpen, edit, editValue }: Props) {
                 companyAddress: address,
                 companyCoordinates:Array.from(Object.values(selectedAddress.geometry.location))
             }).then((data) => {
-                if (data.status == 200) {
+                if (data.status == 200) { 
+                    setLoader(true)
                     handleClose();
                 }
             }).catch((err) => {

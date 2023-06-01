@@ -60,9 +60,9 @@ function UserDetails() {
                     </div>
                 )}
             </div>
-            {open && (
+            {/* {open && (
                 <EditModal open={open} setOpen={setOpen} edit={true} editValue={userDetail} />
-            )}
+            )} */}
         </div>
     )
 }

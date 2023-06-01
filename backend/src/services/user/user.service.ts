@@ -4,12 +4,12 @@ import { createUserType,updateUserType } from '../../types/user/user.service.typ
 
 
 export const findall = async ()=>{
-    const getUsersData = await User.find({isDeleted:false});
+    const getUsersData = await User.find({isDeleted:false}).populate('company');
     return getUsersData;
 }
 
 export const findById = async (id:String)=>{
-    const getUserData = await User.find({_id:id})
+    const getUserData = await User.find({_id:id}).lean().populate('company',{companyName:1})
     return getUserData;
 }
 

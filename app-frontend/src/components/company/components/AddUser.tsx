@@ -20,7 +20,7 @@ function AddUser({setShowAddUser,companyId,setLoader}:Props) {
     useEffect(() => {
         axios.get(`${config.url}/user/`).then((data) =>{ 
             
-        setUserList(()=>data.data.data.filter((item:any) => item.company === null))}).catch(err => console.log(err))
+        setUserList(()=>data.data.data.filter((item:any) => item.company === null &&  item.active == true))}).catch(err => console.log(err))
     },[])
 
     const handleOptionChange = (event:any, option:any) => {
